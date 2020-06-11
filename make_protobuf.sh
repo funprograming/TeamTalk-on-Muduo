@@ -2,7 +2,7 @@
 # author: luoning
 # date: 03/25/2015
 
-PROTOBUF=protobuf-2.6.1
+PROTOBUF=protobuf-cpp-3.12.3
 CUR_DIR=
 
 check_user() {

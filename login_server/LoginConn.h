@@ -22,7 +22,7 @@ typedef struct  {
     string 		hostname;	// 消息服务器的主机名
 } msg_serv_info_t;
 
-std::unordered_map<const TcpConnectionPtr&, msg_serv_info_t*> g_msg_serv_info_;
+std::unordered_map<const TcpConnectionPtr&, std::shared_ptr<msg_serv_info_t>> g_msg_serv_info_;
 typedef std::shared_ptr<IM::Server::IMMsgServInfo> MsgServInfoPtr;
 typedef std::shared_ptr<IM::Server::IMUserCntUpdate> UserCntUpdatePtr;
 typedef std::shared_ptr<IM::Login::IMMsgServReq> MsgServReqPtr;

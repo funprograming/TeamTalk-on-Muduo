@@ -32,7 +32,7 @@ void LoginHttpConn::onRequest(const HttpRequest& req, HttpResponse* resp)
 }
 void LoginHttpConn::_HandleMsgServRequest(HttpResponse* resp)
 {
-    msg_serv_info_t* pMsgServInfo;
+    shared_ptr<msg_serv_info_t> pMsgServInfo;
     uint32_t min_user_cnt = (uint32_t)-1;
     unordered_map<const TcpConnectionPtr&, msg_serv_info_t*>::iterator it_min_conn = g_msg_serv_info_.end();
     unordered_map<const TcpConnectionPtr&, msg_serv_info_t*>::iterator it;

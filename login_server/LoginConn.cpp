@@ -56,11 +56,11 @@ void LoginConn::onConnection(const TcpConnectionPtr& conn)
 		// remove all user count from this message server
 		map<const TcpConnectionPtr&, msg_serv_info_t*>::iterator it = g_msg_serv_info_.find(conn);
 		if (it != g_msg_serv_info_.end()) {
-			msg_serv_info_t* pMsgServInfo = it->second;
+			shared_ptr<msg_serv_info_t> pMsgServInfo = it->second;
 
 			total_online_user_cnt_ -= pMsgServInfo->cur_conn_cnt;
 			LOG_INFO("onclose from MsgServer: %s:%u ", pMsgServInfo->hostname.c_str(), pMsgServInfo->port);
-			delete pMsgServInfo;
+//			delete pMsgServInfo;
 			g_msg_serv_info_.erase(it);
 		}
 		assert(!conn->getContext().empty());
@@ -73,8 +73,8 @@ void LoginConn::onMsgServInfo(const TcpConnectionPtr& conn,
 							    Timestamp)
 {
 	LOG_INFO << "onMsgServInfo:\n" << message->GetTypeName() << message->DebugString();
-	msg_serv_info_t* pMsgServInfo = new msg_serv_info_t;
-	
+//	msg_serv_info_t* pMsgServInfo = new msg_serv_info_t;
+	shared_ptr<msg_serv_info_t> pMsgServInfo = make_shared<msg_serv_info_t>();
 	pMsgServInfo->ip_addr1 = message.ip1();
 	pMsgServInfo->ip_addr2 = message.ip2();
 	pMsgServInfo->port = message.port();
@@ -144,7 +144,7 @@ void LoginConn::onUserCntUpdat(const TcpConnectionPtr& conn,
 {
 	map<const TcpConnectionPtr&, msg_serv_info_t*>::iterator it = g_msg_serv_info_.find(conn);
 	if (it != g_msg_serv_info_.end()) {
-		msg_serv_info_t* pMsgServInfo = it->second;
+		shared_ptr<msg_serv_info_t> pMsgServInfo = it->second;
 
 		uint32_t action = message.user_action();
 		if (action == USER_CNT_INC) {
